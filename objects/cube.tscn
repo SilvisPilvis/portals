@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3 uid="uid://bwxptv3lh3yj1"]
+
+[ext_resource type="Script" uid="uid://dljknhgifqi1j" path="res://scripts/cube.gd" id="1_7xen6"]
+[ext_resource type="Texture2D" uid="uid://cxmdh8jqoe3rq" path="res://textures/dark_wall.png" id="2_ubi45"]
+[ext_resource type="Texture2D" uid="uid://de6q2vf56uqri" path="res://textures/dark_wall_normal.png" id="3_5x27d"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_7xen6"]
+friction = 0.5
+bounce = 0.2
+
+[sub_resource type="Texture2D" id="Texture2D_7xen6"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Texture2D" id="Texture2D_4cycn"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubi45"]
+albedo_texture = ExtResource("2_ubi45")
+normal_enabled = true
+normal_texture = ExtResource("3_5x27d")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xen6"]
+material = SubResource("StandardMaterial3D_ubi45")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4cycn"]
+
+[node name="Cube" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_7xen6")
+script = ExtResource("1_7xen6")
+texture = SubResource("Texture2D_7xen6")
+normal_texture = SubResource("Texture2D_4cycn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7xen6")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4cycn")

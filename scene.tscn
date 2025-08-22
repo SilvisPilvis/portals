@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://divm8tdh2mt0w"]
+
+[ext_resource type="Script" uid="uid://b4f0ds1qtfpat" path="res://scripts/camera_controller.gd" id="1_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://bwxptv3lh3yj1" path="res://objects/cube.tscn" id="1_ulcgi"]
+[ext_resource type="Texture2D" uid="uid://cxmdh8jqoe3rq" path="res://textures/dark_wall.png" id="2_nxogm"]
+[ext_resource type="Texture2D" uid="uid://de6q2vf56uqri" path="res://textures/dark_wall_normal.png" id="3_3253y"]
+[ext_resource type="PackedScene" uid="uid://dy3p0wm73n477" path="res://objects/portal.tscn" id="5_m7jmp"]
+[ext_resource type="PackedScene" uid="uid://c44cj1p41l4ex" path="res://objects/static_cube.tscn" id="6_y2354"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_y2354"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y2354"]
+friction = 0.5
+bounce = 0.2
+
+[sub_resource type="Texture2D" id="Texture2D_y2354"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Texture2D" id="Texture2D_73fnb"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Texture2D" id="Texture2D_ni31j"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Texture2D" id="Texture2D_xlvrw"]
+resource_local_to_scene = false
+resource_name = ""
+
+[node name="Scene" type="Node3D"]
+
+[node name="PlayerCamera" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, -2.031)
+current = true
+fov = 90.0
+script = ExtResource("1_u3cyc")
+enable_vertical_rotation = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="PlayerCamera"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerCamera/StaticBody3D"]
+shape = SubResource("SphereShape3D_y2354")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.624139, 0.781314, 0, -0.781314, 0.624139, 0, 22.7202, 17.4367)
+
+[node name="Cube" parent="." instance=ExtResource("1_ulcgi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.824172, 1.71131, -3.06761)
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_y2354")
+texture = ExtResource("2_nxogm")
+normal_texture = ExtResource("3_3253y")
+
+[node name="Portal2" parent="." node_paths=PackedStringArray("portal_destination", "player_camera") instance=ExtResource("5_m7jmp")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.5, 5.62184)
+portal_destination = NodePath("../Portal")
+player_camera = NodePath("../PlayerCamera")
+
+[node name="Portal" parent="." node_paths=PackedStringArray("portal_destination", "player_camera") instance=ExtResource("5_m7jmp")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.281, 1.3, -1.438)
+portal_destination = NodePath("../Portal2")
+player_camera = NodePath("../PlayerCamera")
+
+[node name="Cube3" parent="." instance=ExtResource("6_y2354")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 1.50789, 3.20003)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(1, 0, 0, 1)
+
+[node name="Cube2" parent="Cube3" instance=ExtResource("6_y2354")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.983, 0, -2)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(0, 1, 0, 1)
+
+[node name="Cube3" parent="Cube3" instance=ExtResource("6_y2354")]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, -4)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(0, 0, 1, 1)
+
+[node name="Floor" parent="." instance=ExtResource("6_y2354")]
+size = Vector3(80, 1, 80)
+texture = SubResource("Texture2D_ni31j")
+normal_texture = SubResource("Texture2D_xlvrw")

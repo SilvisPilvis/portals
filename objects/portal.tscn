@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy3p0wm73n477"]
+
+[ext_resource type="Script" uid="uid://b0tuiix7pi8x4" path="res://scripts/portal.gd" id="1_ch4u6"]
+[ext_resource type="Material" uid="uid://cl7lbypt8tpn7" path="res://shaders/portal_shader_mat.tres" id="2_04sti"]
+[ext_resource type="Shader" uid="uid://v0tbeqmeon75" path="res://shaders/portal_shader.gdshader" id="2_12btf"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_yog6r"]
+size = Vector2(1.1, 1.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ch4u6"]
+size = Vector3(1, 1.5, 0.1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_04sti"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ch4u6"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ch4u6"]
+material = SubResource("StandardMaterial3D_ch4u6")
+size = Vector2(1, 1.5)
+
+[node name="Portal" type="Node3D"]
+script = ExtResource("1_ch4u6")
+portal_resolution = Vector2i(1152, 648)
+shader = ExtResource("2_12btf")
+
+[node name="PortalFrame" type="MeshInstance3D" parent="."]
+editor_description = "The decorative frame/rim that players can see (stone archway, metal ring, etc.)"
+visible = false
+mesh = SubResource("QuadMesh_yog6r")
+
+[node name="FrameCollision" type="StaticBody3D" parent="PortalFrame"]
+editor_description = "Makes it a solid, immovable object in the world"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PortalFrame/FrameCollision"]
+editor_description = "Adds a collision from the specified shape so that players cant walk trough the frame itself."
+shape = SubResource("BoxShape3D_ch4u6")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="PortalCamera" type="Camera3D" parent="SubViewport"]
+
+[node name="DebugCamera" type="MeshInstance3D" parent="SubViewport/PortalCamera"]
+mesh = SubResource("SphereMesh_04sti")
+
+[node name="PortalQuad" type="MeshInstance3D" parent="."]
+editor_description = "QuadMesh with portal material"
+material_override = ExtResource("2_04sti")
+mesh = SubResource("QuadMesh_ch4u6")
+
+[node name="Area3D" type="Area3D" parent="PortalQuad"]
+editor_description = "for teleportation detection"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PortalQuad/Area3D"]
+editor_description = "Collision detection"
+shape = SubResource("BoxShape3D_ch4u6")

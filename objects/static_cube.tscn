@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://c44cj1p41l4ex"]
+
+[ext_resource type="Script" uid="uid://dtggovp7hsdo8" path="res://scripts/static_cube.gd" id="1_yb3qi"]
+
+[sub_resource type="Texture2D" id="Texture2D_yb3qi"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="Texture2D" id="Texture2D_5moet"]
+resource_local_to_scene = false
+resource_name = ""
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yb3qi"]
+albedo_texture = SubResource("Texture2D_yb3qi")
+normal_enabled = true
+normal_texture = SubResource("Texture2D_5moet")
+uv1_scale = Vector3(3, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5moet"]
+material = SubResource("StandardMaterial3D_yb3qi")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sg5yi"]
+
+[node name="Cube" type="StaticBody3D"]
+script = ExtResource("1_yb3qi")
+texture = SubResource("Texture2D_yb3qi")
+normal_texture = SubResource("Texture2D_5moet")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5moet")
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_sg5yi")
