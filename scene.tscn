@@ -47,24 +47,24 @@ shape = SubResource("SphereShape3D_y2354")
 transform = Transform3D(1, 0, 0, 0, 0.624139, 0.781314, 0, -0.781314, 0.624139, 0, 22.7202, 17.4367)
 
 [node name="Cube" parent="." instance=ExtResource("1_ulcgi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.824172, 1.71131, -3.06761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.93867, 1.71131, -0.43651)
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_y2354")
 texture = ExtResource("2_nxogm")
 normal_texture = ExtResource("3_3253y")
 
 [node name="Portal2" parent="." node_paths=PackedStringArray("portal_destination", "player_camera") instance=ExtResource("5_m7jmp")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.5, 5.62184)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.5, 5)
 portal_destination = NodePath("../Portal")
 player_camera = NodePath("../PlayerCamera")
 
 [node name="Portal" parent="." node_paths=PackedStringArray("portal_destination", "player_camera") instance=ExtResource("5_m7jmp")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 2.281, 1.3, -1.438)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 5, 1.5, 5)
 portal_destination = NodePath("../Portal2")
 player_camera = NodePath("../PlayerCamera")
 
 [node name="Cube3" parent="." instance=ExtResource("6_y2354")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 1.50789, 3.20003)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2, 1.508, 2.55)
 size = Vector3(5, 2, 1)
 texture = SubResource("Texture2D_y2354")
 normal_texture = SubResource("Texture2D_73fnb")
@@ -78,6 +78,27 @@ normal_texture = SubResource("Texture2D_73fnb")
 color = Color(0, 1, 0, 1)
 
 [node name="Cube3" parent="Cube3" instance=ExtResource("6_y2354")]
+transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, -4)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(0, 0, 1, 1)
+
+[node name="Cube4" parent="Cube3" instance=ExtResource("6_y2354")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 0, 5.00211)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(1, 0, 0, 1)
+
+[node name="Cube2" parent="Cube3/Cube4" instance=ExtResource("6_y2354")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.983, 0, -2)
+size = Vector3(5, 2, 1)
+texture = SubResource("Texture2D_y2354")
+normal_texture = SubResource("Texture2D_73fnb")
+color = Color(0, 1, 0, 1)
+
+[node name="Cube3" parent="Cube3/Cube4" instance=ExtResource("6_y2354")]
 transform = Transform3D(1, 0, -3.55271e-15, 0, 1, 0, 3.55271e-15, 0, 1, 0, 0, -4)
 size = Vector3(5, 2, 1)
 texture = SubResource("Texture2D_y2354")

@@ -68,7 +68,8 @@
 //}
 
 shader_type spatial;
-render_mode unshaded, cull_disabled;
+//render_mode unshaded, cull_disabled;
+render_mode unshaded, cull_back;
 
 uniform sampler2D portal_texture;
 uniform vec4 inactive_colour : source_color = vec4(1.0, 1.0, 1.0, 1.0);

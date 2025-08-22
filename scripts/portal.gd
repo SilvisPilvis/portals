@@ -27,6 +27,7 @@ func setup_portal():
 	
 	# Create the shader material
 	var shader_material = ShaderMaterial.new()
+	# Set the portal shader as shader for the material
 	shader_material.shader = shader
 	
 	# Set initial shader parameters
@@ -34,10 +35,15 @@ func setup_portal():
 	
 	# Apply to quad
 	portal_quad.material_override = shader_material
+	
+	# Flip the portal quad on the Y axis
+	portal_quad.scale = Vector3(portal_quad.scale.x, -portal_quad.scale.y, portal_quad.scale.z)
 
 # Add this new function to update the texture parameter when needed
 func _process(_delta):
+	# If player camera and portal camera is not null
 	if player_camera and portal_destination:
+		# Update portal camera
 		update_portal_camera()
 	
 	# Update the portal texture in case it changes
@@ -50,24 +56,28 @@ func _process(_delta):
 			mat.set_shader_parameter("portal_texture", viewport_texture)
 
 func update_portal_camera():
+	# If player camera or portal destination is null return
 	if not player_camera or not portal_destination:
 		return
 
-	# Get global transform of both portals
-	var src_transform = global_transform
-	var dst_transform = portal_destination.global_transform
-
-	# Invert source to get relative position/rotation of player wrt source portal
-	var relative_transform = src_transform.affine_inverse() * player_camera.global_transform
-
-	# Mirror the relative transform across the portal plane (flip Z axis)
-	relative_transform = relative_transform.scaled_local(Vector3(1, 1, -1))
-
-	# Apply mirrored transform to destination portal's transform
-	portal_camera.global_transform = dst_transform * relative_transform
-	debug_camera.global_transform = portal_camera.global_transform
-
-	# Match FOV and other settings
+	# Get global transform of current portal
+	var current_portal_transform: Transform3D = self.global_transform
+	# Get global transform of linked portal
+	var linked_portal_transform: Transform3D = portal_destination.global_transform
+	# Player cam global transform
+	var player_camera_transform: Transform3D = player_camera.global_transform
+	
+	# Get player's position relative to the current portal
+	var relative_transform: Transform3D = current_portal_transform.affine_inverse() * player_camera_transform
+	
+	# Apply that relative transform to the destination portal
+	#var final_transform: Transform3D = linked_portal_transform * relative_transform
+	var m: Transform3D = linked_portal_transform * relative_transform
+	
+	# Apply to portal camera
+	portal_camera.global_transform = m
+	
+	# Match camera properties
 	portal_camera.fov = player_camera.fov
 	portal_camera.near = player_camera.near
 	portal_camera.far = player_camera.far
